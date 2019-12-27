@@ -1,0 +1,50 @@
+version: "3.1"
+
+# select appropriate image for your run
+
+services:
+
+  db:
+    image: regimg.com/mariadb:10.1.32
+#    image: regimg.com/mariadb_aarch64:10.1.32
+    expose:
+      - "3306"
+    volumes:
+      - ~/volumes-data/wordpress-db.example.com/log:/data/log
+      - ~/volumes-data/wordpress-db.example.com/db:/data/db
+      - ~/volumes-data/wordpress-db.example.com/persist:/data/persist
+    environment:
+      - EMAIL=frank@leadstec.com
+      - ENGINE=example.com
+      - MARIADB_DB_USER=wpuser
+      - MARIADB_DB_NAME=wordpress
+    secrets:
+      - lcs
+      - deploy
+    hostname: wordpress-db.example.com
+    container_name: wordpress-db.example.com
+
+  wordpress:
+    image: regimg.com/wordpress:4.9.4
+#    image: regimg.com/wordpress_aarch64:4.9.4
+    ports:
+      - "80:80"
+    volumes:
+      - ~/volumes-data/wordpress.example.com/log:/data/log
+      - ~/volumes-data/wordpress.example.com/persist:/data/persist
+    env_file:
+      - ./env
+    environment:
+      - EMAIL=frank@leadstec.com
+      - WP_ADMIN_EMAIL=frank@leadstec.com
+    secrets:
+      - lcs
+      - deploy
+    hostname: wordpress.example.com
+    container_name: wordpress.example.com
+
+secrets:
+  lcs:
+    file: ~/.vcubi/lcs
+  deploy:
+    file: ./deploy

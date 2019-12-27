@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -e
+
+clog -t "wordpress: Build process starts ..."
+
+# add image schema
+lcs-cli schema add --section wordpress
+
+# create temp plugin directory
+mkdir -p ${WP_PLUGINS_TMP_DIR}
+# setup nginx
+cp -f /scripts/setup/nginx/default.conf /etc/nginx/conf.d/default.conf
+clog -i "wordpress: Nginx config template created."
+
+clog -t "wordpress: Build process completed."

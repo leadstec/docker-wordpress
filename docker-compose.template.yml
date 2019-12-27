@@ -1,0 +1,55 @@
+version: "3.7"
+# Set -arch=_aarch64 for arm build
+services:
+
+  wordpress:
+    build:
+      context: .
+      args:
+#        - arch=_aarch64
+        - version=4.9.4
+        - build=dev
+    image: leadstec/wordpress:4.9.4
+    ports:
+      - "80:80"
+    volumes:
+      - ~/volumes-data/wordpress.local/log:/data/log
+      - ~/volumes-data/wordpress.local/persist:/data/persist
+    env_file:
+      - ./env
+    environment:
+      - EMAIL=
+      - PHP_DEV_CONFIG=true
+      - WP_ADMIN_EMAIL=
+    secrets:
+      - lcs
+      - deploy
+    hostname: wordpress.local
+    container_name: wordpress.local
+
+  db:
+    image: leadstec/mariadb:10.1.32
+#    image: regimg.com/mariadb_aarch64:10.1.32
+    expose:
+      - "3306"
+    volumes:
+      - ~/volumes-data/wordpress-db.example.com/log:/data/log
+      - ~/volumes-data/wordpress-db.example.com/db:/data/db
+      - ~/volumes-data/wordpress-db.example.com/persist:/data/persist
+    environment:
+      - EMAIL=
+      - ENGINE=example.com
+      - MARIADB_DB_USER=wpuser
+      - MARIADB_DB_NAME=wordpress
+    secrets:
+      - lcs
+      - deploy
+    hostname: wordpress-db.example.com
+    container_name: wordpress-db.example.com
+
+
+secrets:
+  lcs:
+    file: ~/.vcubi/lcs
+  deploy:
+    file: ./deploy

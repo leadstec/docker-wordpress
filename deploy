@@ -1,0 +1,11 @@
+
+mariadb:
+{
+  MARIADB_REMOTE_ADMIN_PASS="pdaesd";
+  MARIADB_DB_PASS="pdaesd";
+}
+
+wordpress:
+{
+  WP_ADMIN_PASS="pdaesd";
+}

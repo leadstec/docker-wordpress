@@ -1,0 +1,137 @@
+{
+  "registry": "regimg.com",
+  "image": "wordpress",
+  "version": "",
+  "build": "",
+  "schema": "20181203",
+  "lcs_schema": "1.6.0",
+  "permissions": [],
+  "envs": [
+    {
+      "name": "WP_SITE_TITLE",
+      "default": "Wordpress",
+      "replacements": []
+    },
+    {
+      "name": "WP_SITE_URL",
+      "default": "`hostname -f`",
+      "replacements": []
+    },
+    {
+      "name": "WP_ADMIN",
+      "default": "admin",
+      "replacements": []
+    },
+    {
+      "name": "WP_ADMIN_EMAIL",
+      "default": "`echo ${EMAIL}`",
+      "replacements": []
+    },
+    {
+      "name": "WP_REWRITE_PERMALINK",
+      "default": "true",
+      "replacements": []
+    },
+    {
+      "name": "WP_MULTISITE",
+      "default": "false",
+      "replacements": [
+        {
+          "pattern": "#WP_MULTISITE_FALSE_ERASE",
+          "path": "/etc/nginx/conf.d/default.conf",
+          "type": "4"
+        }
+      ]
+    },
+    {
+      "name": "WP_MULTISITE_SUBDOMAINS",
+      "default": "true",
+      "replacements": [
+        {
+          "pattern": "#WP_MULTISITE_SUBDOMAINS_TRUE_ERASE",
+          "path": "/etc/nginx/conf.d/default.conf",
+          "type": "3"
+        }
+      ]
+    },
+    {
+      "name": "WP_DBHOST",
+      "default": "localhost",
+      "replacements": []
+    },
+    {
+      "name": "WP_DBNAME",
+      "default": "wordpress",
+      "replacements": []
+    },
+    {
+      "name": "WP_DBUSER",
+      "default": "wordpress",
+      "replacements": []
+    },
+    {
+      "name": "WP_ADMIN_PASS",
+      "default": "{{WP_ADMIN_PASS_SECRET}}",
+      "replacements": [
+        {
+          "pattern": "{{WP_ADMIN_PASS}}",
+          "path": "/scripts/wordpress.post-secret.sh",
+          "sudo": "",
+          "type": "1"
+        }
+      ]
+    },
+    {
+      "name": "MARIADB_DB_PASS",
+      "default": "{{MARIADB_DB_PASS_SECRET}}",
+      "replacements": [
+        {
+          "pattern": "{{MARIADB_DB_PASS}}",
+          "path": "/scripts/wordpress.post-secret.sh",
+          "sudo": "",
+          "type": "1"
+        }
+      ]
+    }
+  ],
+  "secrets": [
+    {
+      "file": "/run/secrets/deploy",
+      "required": false,
+      "replacements": [
+        {
+          "name": "WP_ADMIN_PASS",
+          "section": "wordpress",
+          "pattern": "{{WP_ADMIN_PASS_SECRET}}",
+          "path": "/scripts/wordpress.post-secret.sh"
+        },
+        {
+          "name": "MARIADB_DB_PASS",
+          "section": "mariadb",
+          "pattern": "{{MARIADB_DB_PASS_SECRET}}",
+          "path": "/scripts/wordpress.post-secret.sh"
+        }
+      ]
+    }
+  ],
+  "storages": [
+    {
+      "type": "2",
+      "chown": "nginx:lcs",
+      "path": "${APP_DIR}/wp-content",
+      "base": "wordpress"
+    },
+    {
+      "type": "1",
+      "chown": "nginx:lcs",
+      "path": "${APP_DIR}/wp-config.php",
+      "base": "wordpress"
+    },
+    {
+      "type": "1",
+      "chown": "nginx:lcs",
+      "path": "${APP_DIR}/.htaccess",
+      "base": "wordpress"
+    }
+  ]
+}
