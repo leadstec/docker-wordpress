@@ -20,7 +20,6 @@ function wait_for_database() {
     echo
 }
 
-
 # wait for dbserver to come online
 wait_for_database
 
@@ -37,7 +36,6 @@ if [[ ${SETUP_MODE} == 'new' ]]; then
 define('WP_DEBUG', false);
 define('FS_METHOD','direct');
 define('WP_ZH_CN_ICP_NUM', true);
-//define('WP_CONTENT_DIR', '${LCS_PERSIST_DIR}/wordpress/wp-content');
 PHP
 
     # install wordpress and create db tables
@@ -81,20 +79,6 @@ PHP
 
     # rewrite permalink
     [[ ${WP_REWRITE_PERMALINK} == true ]] && wp rewrite structure --path=${APP_DIR} '/%year%/%monthnum%/%postname%/'
-
-    # remove hello dolly
-    wp plugin uninstall --path=${APP_DIR} hello
-
-    # if [[ ${WP_ENABLE_DEFAULT_PLUGINS} == true ]]; then
-    #     # china cdn plugin
-    #     wp plugin install --path=${APP_DIR} ${WP_PRIVATE_REPO}/plugins/replace-china-cdn/replace-china-cdn-1.1.zip --activate
-    #     wp plugin install --path=${APP_DIR} ${WP_PRIVATE_REPO}/plugins/ldap-login-password-and-role-manager/ldap-login-password-and-role-manager.1.0.11.zip --activate
-    #     # generic-openid-connect
-    #     wp plugin install --path=${APP_DIR} generic-openid-connect --activate
-    #     # piwik
-    #     wp plugin install --path=${APP_DIR} wp-piwik --activate
-    # fi
-    # clog -i "wordpress: Essential plugins installed."
 else
     # custom code when restore
     # create wp-config.php
@@ -110,10 +94,9 @@ else
 define('WP_DEBUG', false);
 define('FS_METHOD','direct');
 define('WP_ZH_CN_ICP_NUM', true);
-//define('WP_CONTENT_DIR', '${LCS_PERSIST_DIR}/wordpress/wp-content');
 PHP
     # Backup database
-    mysqldump --add-drop-table --all-databases -h ${WP_DBHOST} -u ${WP_DBUSER} -p{{MARIADB_DB_PASS}} | gzip > ${LCS_PERSIST_DIR}/db_$(date "+%Y%m%d%H%M").sql.gz
+    mysqldump --add-drop-table --all-databases -h ${WP_DBHOST} -u ${WP_DBUSER} -p{{MARIADB_DB_PASS}} | gzip > ${PERSIST_DIR}/db_$(date "+%Y%m%d%H%M").sql.gz
     #Update wordpress database to match current installation files
     wp core update-db --path=${APP_DIR}
     clog -i "wordpress: Persistence storage restored, original db had backup and updated to current version."

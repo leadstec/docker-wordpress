@@ -1,20 +1,20 @@
-version: "3.7"
-# Set -arch=_aarch64 for arm build
+version: "3.8"
+
 services:
 
   wordpress:
     build:
       context: .
       args:
-#        - arch=_aarch64
-        - version=4.9.4
+        - arch=
+        - version=5.5.1
         - build=dev
-    image: leadstec/wordpress:4.9.4
+    image: leadstec.tencentcloudcr.com/leadstec/wordpress:5.5.1
     ports:
       - "80:80"
     volumes:
-      - ~/volumes-data/wordpress.local/log:/data/log
-      - ~/volumes-data/wordpress.local/persist:/data/persist
+      - ~/volumes/wordpress.local/log:/data/log
+      - ~/volumes/wordpress.local/persist:/data/persist
     env_file:
       - ./env
     environment:
@@ -28,14 +28,13 @@ services:
     container_name: wordpress.local
 
   db:
-    image: leadstec/mariadb:10.1.32
-#    image: regimg.com/mariadb_aarch64:10.1.32
+    image: leadstec.tencentcloudcr.com/leadstec/mariadb:latest
     expose:
       - "3306"
     volumes:
-      - ~/volumes-data/wordpress-db.example.com/log:/data/log
-      - ~/volumes-data/wordpress-db.example.com/db:/data/db
-      - ~/volumes-data/wordpress-db.example.com/persist:/data/persist
+      - ~/volumes/wordpress-db.example.com/log:/data/log
+      - ~/volumes/wordpress-db.example.com/db:/data/db
+      - ~/volumes/wordpress-db.example.com/persist:/data/persist
     environment:
       - EMAIL=
       - ENGINE=example.com
@@ -44,8 +43,8 @@ services:
     secrets:
       - lcs
       - deploy
-    hostname: wordpress-db.example.com
-    container_name: wordpress-db.example.com
+    hostname: wordpress-db.local
+    container_name: wordpress-db.local
 
 
 secrets:

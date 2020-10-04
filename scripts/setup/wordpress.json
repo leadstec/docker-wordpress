@@ -1,5 +1,5 @@
 {
-  "registry": "regimg.com",
+  "registry": "leadstec",
   "image": "wordpress",
   "version": "",
   "build": "",
@@ -68,30 +68,6 @@
       "name": "WP_DBUSER",
       "default": "wordpress",
       "replacements": []
-    },
-    {
-      "name": "WP_ADMIN_PASS",
-      "default": "{{WP_ADMIN_PASS_SECRET}}",
-      "replacements": [
-        {
-          "pattern": "{{WP_ADMIN_PASS}}",
-          "path": "/scripts/wordpress.post-secret.sh",
-          "sudo": "",
-          "type": "1"
-        }
-      ]
-    },
-    {
-      "name": "MARIADB_DB_PASS",
-      "default": "{{MARIADB_DB_PASS_SECRET}}",
-      "replacements": [
-        {
-          "pattern": "{{MARIADB_DB_PASS}}",
-          "path": "/scripts/wordpress.post-secret.sh",
-          "sudo": "",
-          "type": "1"
-        }
-      ]
     }
   ],
   "secrets": [
@@ -102,36 +78,17 @@
         {
           "name": "WP_ADMIN_PASS",
           "section": "wordpress",
-          "pattern": "{{WP_ADMIN_PASS_SECRET}}",
+          "pattern": "{{WP_ADMIN_PASS}}",
           "path": "/scripts/wordpress.post-secret.sh"
         },
         {
           "name": "MARIADB_DB_PASS",
           "section": "mariadb",
-          "pattern": "{{MARIADB_DB_PASS_SECRET}}",
+          "pattern": "{{MARIADB_DB_PASS}}",
           "path": "/scripts/wordpress.post-secret.sh"
         }
       ]
     }
   ],
-  "storages": [
-    {
-      "type": "2",
-      "chown": "nginx:lcs",
-      "path": "${APP_DIR}/wp-content",
-      "base": "wordpress"
-    },
-    {
-      "type": "1",
-      "chown": "nginx:lcs",
-      "path": "${APP_DIR}/wp-config.php",
-      "base": "wordpress"
-    },
-    {
-      "type": "1",
-      "chown": "nginx:lcs",
-      "path": "${APP_DIR}/.htaccess",
-      "base": "wordpress"
-    }
-  ]
+  "storages": []
 }

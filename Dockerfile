@@ -1,27 +1,24 @@
 #
-# AUTHOR            Frank,H.L.Lai <frank@leadstec.com>
-# DOCKER-VERSION    18.06
-# Copyright         (C) 2018 Leads Technologies Ltd. All rights reserved.
+# Author            Frank,H.L.Lai <frank@leadstec.com>
+# Docker Version    19.03
+# Website           https://www.leadstec.com
+# Copyright         (C) 2020 LEADSTEC Systems. All rights reserved.
 #
 ARG arch=
-FROM regimg.com/php7${arch}:7.2.10
-
-ARG version=4.9.x
+FROM leadstec.tencentcloudcr.com/leadstec/php${arch}:7.3.22
+ARG version=5.5.1
 ARG build=dev
 
 LABEL version="${version}-${build}" \
-	description="Wordpress docker image for VCubi" \
+	description="Wordpress image for VCubi platform" \
 	maintainer="Frank,H.L.Lai <frank@leadstec.com>"
 
-# set environment variables
 ENV WORDPRESS_VERSION="${version}" \
-	WP_CLI_VERSION="2.0.1" \
-    WP_PLUGINS_TMP_DIR="/data/wp_plugins" \
-    WP_PRIVATE_REPO="http://repo.leadstec.com/artifactory/ext-release/wordpress"
+	WP_CLI_VERSION="2.4.0"
 
 # download and install wordpress
-RUN curl -fsSL ${WP_PRIVATE_REPO}/wordpress-${WORDPRESS_VERSION}-zh_CN.tar.gz | tar xz --strip 1 -C ${APP_DIR} && \
-	curl ${WP_PRIVATE_REPO}/wp-cli/wp-cli-${WP_CLI_VERSION}.phar -o /usr/local/bin/wp && \
+RUN curl -LfsS https://package-1253314665.cos.ap-guangzhou.myqcloud.com/noarch/wordpress/wordpress-${version}.tar.gz | tar xz --strip 1 -C ${APP_DIR} && \
+	curl -LfsS https://package-1253314665.cos.ap-guangzhou.myqcloud.com/noarch/wordpress/wp-cli-${WP_CLI_VERSION}.phar -o /usr/local/bin/wp && \
 	chmod +x /usr/local/bin/wp
 
 # copy install/start scripts

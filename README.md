@@ -1,14 +1,53 @@
+# Wordpress image for VCubi Platform
 
-使用文档请参考 http://docs.leadstec.com/saas/wordpress/
+![Wordpress](https://img.shields.io/badge/Wordpress-5.5.1,_latest-blue)
+![x86_64](https://img.shields.io/badge/x86_64-supported-brightgreen)
+![aarch64](https://img.shields.io/badge/aarch64-supported-brightgreen)
 
-### CHANGELOG
+## How to Use
+
+### Pull image
+    # from Docker Hub
+    docker pull leadstec/wordpress:[tag]
+    docker pull leadstec/wordpress-aarch64:[tag]
+    # from Tencent CR
+    docker pull leadstec.tencentcloudcr.com/leadstec/wordpress:[tag]
+    docker pull leadstec.tencentcloudcr.com/leadstec/wordpress-aarch64:[tag]
+
+### Build image
+    docker-compose build wordpress
+
+### LCS Schema & ENV, Secrets
+
+| Variable              | Description               | Default | Type |
+|-----------------------|---------------------------|---------|------|
+| WP_SITE_TITLE         |                           | Wordpress | Env |
+| WP_SITE_URL | | `hostname -f` | Env |
+| WP_ADMIN | | admin | Env |
+| WP_ADMIN_EMAIL | | `echo ${EMAIL}` | Env |
+| WP_REWRITE_PERMALINK | | true | Env |
+| WP_MULTISITE | | false | Env |
+| WP_MULTISITE_SUBDOMAINS | | true | Env |
+| WP_DBHOST | | localhost | Env |
+| WP_DBNAME | | wordpress | Env |
+| WP_DBUSER | | wordpress | Env |
+| WP_ADMIN_PASS | | - | Secret |
+| MARIADB_DB_PASS | | - | Secret |
+
+## Image Structure Test
+    container-structure-test test --image leadstec/wordpress:tag --config tests/wordpress.yaml
+
+## CHANGELOG
+
+**5.5.1 (2020/10/04)**
+* Update: wp-cli -> 2.4.0
+* Update: Based on Php 7.3.22
 
 **4.9.4 2018-12-03**
-* 支持 lcs 1.6.2
-* wp-cli -> 2.0.1
+* Update: lcs 1.6.2
+* Update: wp-cli -> 2.0.1
 
 **4.9.4**
-* 更新版本
 * 更新wp-cli到1.5.1
 * 支持aarch64
 
