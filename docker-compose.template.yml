@@ -5,11 +5,7 @@ services:
   wordpress:
     build:
       context: .
-      args:
-        - arch=
-        - version=5.5.1
-        - build=dev
-    image: leadstec.tencentcloudcr.com/leadstec/wordpress:5.5.1
+    image: leadstec/wordpress:5.6
     ports:
       - "80:80"
     volumes:
@@ -28,7 +24,7 @@ services:
     container_name: wordpress.local
 
   db:
-    image: leadstec.tencentcloudcr.com/leadstec/mariadb:latest
+    image: leadstec/mariadb:latest
     expose:
       - "3306"
     volumes:

@@ -1,24 +1,17 @@
 #
 # Author            Frank,H.L.Lai <frank@leadstec.com>
-# Docker Version    19.03
+# Docker Version    20.10
 # Website           https://www.leadstec.com
-# Copyright         (C) 2020 LEADSTEC Systems. All rights reserved.
+# Copyright         (C) 2021 LEADSTEC Systems. All rights reserved.
 #
-ARG arch=
-FROM leadstec.tencentcloudcr.com/leadstec/php${arch}:7.3.22
-ARG version=5.5.1
-ARG build=dev
+FROM leadstec/php:7.3.26
 
-LABEL version="${version}-${build}" \
-	description="Wordpress image for VCubi platform" \
+LABEL description="Wordpress image for VCubi platform" \
 	maintainer="Frank,H.L.Lai <frank@leadstec.com>"
 
-ENV WORDPRESS_VERSION="${version}" \
-	WP_CLI_VERSION="2.4.0"
-
 # download and install wordpress
-RUN curl -LfsS https://package-1253314665.cos.ap-guangzhou.myqcloud.com/noarch/wordpress/wordpress-${version}.tar.gz | tar xz --strip 1 -C ${APP_DIR} && \
-	curl -LfsS https://package-1253314665.cos.ap-guangzhou.myqcloud.com/noarch/wordpress/wp-cli-${WP_CLI_VERSION}.phar -o /usr/local/bin/wp && \
+RUN curl -LfsS https://wordpress.org/wordpress-5.6.tar.gz | tar xz --strip 1 -C ${APP_DIR} && \
+	curl -LfsS https://github.com/wp-cli/wp-cli/releases/download/v2.4.0/wp-cli-2.4.0.phar -o /usr/local/bin/wp && \
 	chmod +x /usr/local/bin/wp
 
 # copy install/start scripts
