@@ -5,7 +5,7 @@ services:
   wordpress:
     build:
       context: .
-    image: leadstec/wordpress:5.6
+    image: leadstec/wordpress:latest
     ports:
       - "80:80"
     volumes:
@@ -14,7 +14,6 @@ services:
     env_file:
       - ./env
     environment:
-      - EMAIL=
       - PHP_DEV_CONFIG=true
       - WP_ADMIN_EMAIL=
     secrets:
@@ -28,12 +27,10 @@ services:
     expose:
       - "3306"
     volumes:
-      - ~/volumes/wordpress-db.example.com/log:/data/log
-      - ~/volumes/wordpress-db.example.com/db:/data/db
-      - ~/volumes/wordpress-db.example.com/persist:/data/persist
+      - ~/volumes/wordpress-db.local/log:/data/log
+      - ~/volumes/wordpress-db.local/db:/data/db
+      - ~/volumes/wordpress-db.local/persist:/data/persist
     environment:
-      - EMAIL=
-      - ENGINE=example.com
       - MARIADB_DB_USER=wpuser
       - MARIADB_DB_NAME=wordpress
     secrets:

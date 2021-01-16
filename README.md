@@ -15,10 +15,10 @@ LEADSTEC: [Official website](https://www.leadstec.com)
     docker pull leadstec/wordpress:latest
 
     # Build image
-    docker-compose build .
+    docker-compose build
 
     # Image Structure Test
-    container-structure-test test --image leadstec/wordpress:tag --config tests/wordpress.yaml
+    container-structure-test test --image leadstec/wordpress:tag --config tests/wordpress.yml
 
 ## LCS Schema & ENV, Secrets
 
@@ -27,7 +27,7 @@ LEADSTEC: [Official website](https://www.leadstec.com)
 | WP_SITE_TITLE         |                           | Wordpress | Env |
 | WP_SITE_URL | | `hostname -f` | Env |
 | WP_ADMIN | | admin | Env |
-| WP_ADMIN_EMAIL | | `echo ${EMAIL}` | Env |
+| WP_ADMIN_EMAIL | | | Env |
 | WP_REWRITE_PERMALINK | | true | Env |
 | WP_MULTISITE | | false | Env |
 | WP_MULTISITE_SUBDOMAINS | | true | Env |

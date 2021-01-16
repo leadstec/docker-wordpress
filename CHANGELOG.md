@@ -1,5 +1,8 @@
 # CHANGELOG
 
+**2021/01/17**
+* Update: WP_ADMIN_EMAIL need enter since 'EMAIL' env was deleted in this version
+
 **2021/01/11**
 * Update: Wordpress 5.6
 * Update: Implement Github Actions for CI

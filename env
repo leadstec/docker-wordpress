@@ -1,6 +1,4 @@
 # alpine & lcs ENVs
-EMAIL=user@leadstec.com
-ENGINE=example.com
 ENABLE_CROND=false
 ENABLE_SUPERVISORD_HTTP=false
 LCS_LOG_LEVEL=production
@@ -23,6 +21,7 @@ PHP_MEMORY_LIMIT=128M
 # wordpress
 WP_SITE_TITLE=DemoSite
 WP_ADMIN=admin
+WP_ADMIN_EMAIL=admin@example.com
 WP_REWRITE_PERMALINK=true
 WP_MULTISITE=false
 WP_MULTISITE_SUBDOMAINS=false
